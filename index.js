@@ -3,6 +3,6 @@ var db = require('./db'),
 	server = require('./server')
 
 var port = process.env.PORT || config.port || 5000;
-server.listen(port, function () {
+server().listen(port, function () {
 	console.log('vonsai server: running on ' + port + ' ('+config.env+')');
 });

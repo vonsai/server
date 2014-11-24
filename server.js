@@ -2,9 +2,18 @@ var express = require('express')
 
 var routes = require('./routes')
 
-var app = express()
+exports = module.exports = function() {
 
-app.set('x-powered-by', false);
-app.get('/', routes.web.index.get)
+	var app = express()
 
-exports = module.exports = app
+	app.set('x-powered-by', false);
+
+	app.route('/')
+		.get(routes.web.index.get)
+		
+	app.route('/api/categories')
+		.get(routes.api.categories.get)
+		.post(routes.api.categories.post)
+
+	return app
+}
