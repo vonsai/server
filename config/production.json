@@ -1,5 +1,6 @@
 {
 	"env": "production",
 	"db": "mongodb://jorge:ola@ds051740.mongolab.com:51740/vonsai",
-	"port": 80
+	"port": 80, 
+	"expireToken": 86400 
 }

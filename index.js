@@ -1,4 +1,4 @@
-var db = require('./db'),
+var db = require('./db')(),
 	config = require('./config'),
 	server = require('./server')
 

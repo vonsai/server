@@ -3,9 +3,13 @@ var models = require('./models');
 
 var config = require('./config');
 
-mongoose.connect(config.db);
+module.exports = exports = function() {
 
-mongoose.model('Category', models.category);
-mongoose.model('Article', models.article)
+	mongoose.connect(config.db);
+	
+	for (var model in models) {
+		mongoose.model(model, models[model])
+	}
 
-module.exports = exports = mongoose;
+	return mongoose
+};

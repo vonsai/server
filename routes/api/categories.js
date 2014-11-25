@@ -1,7 +1,12 @@
+var Category = require('mongoose').model('Category'),
+	User = require('mongoose').model('User')
+
 var categories = {
 	get: function (req, res){
 
-		res.send('Get categories')
+		Category.find({}, function (e, cats) {
+			res.send(cats)
+		})
 	}, 
 	post: function (req, res){
 

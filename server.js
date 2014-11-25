@@ -1,6 +1,8 @@
-var express = require('express')
+var express = require('express'),
+	bodyParser = require('body-parser')
 
-var routes = require('./routes')
+var routes = require('./routes'),
+	middleware = require('./middleware')
 
 exports = module.exports = function() {
 
@@ -10,8 +12,16 @@ exports = module.exports = function() {
 
 	app.route('/')
 		.get(routes.web.index.get)
-		
+
+	app.use('/api/*', bodyParser.json(), middleware.jsonResponse)
+	app.use('/api/*', middleware.signatureRequired)
+
+	app.route('/api/auth')
+		.post(routes.api.auth.post)
+		.delete(routes.api.auth.delete)
+
 	app.route('/api/categories')
+		.all(middleware.tokenRequired)
 		.get(routes.api.categories.get)
 		.post(routes.api.categories.post)
 

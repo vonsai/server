@@ -8,6 +8,7 @@ var require = function (module) {
 
 var api = {
 
+	auth: require('auth'),
 	categories: require('categories')
 }
 
