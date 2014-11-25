@@ -36,7 +36,7 @@ var createToken = function (req, res) {
 		usr.tokens.push(token)
 		usr.save(function (err){
 			if (err) res.sendStatus(500)
-			else res.send(token)
+			else res.send({token:token, accountTokens:usr.tokens.length})
 		})
 	})
 }
