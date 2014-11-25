@@ -14,7 +14,7 @@ exports = module.exports = function() {
 		.get(routes.web.index.get)
 
 	app.use('/api/*', bodyParser.json(), middleware.jsonResponse)
-	app.use('/api/*', middleware.signatureRequired)
+	//app.use('/api/*', middleware.signatureRequired)
 
 	app.route('/api/auth')
 		.post(routes.api.auth.post)

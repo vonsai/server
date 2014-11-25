@@ -36,7 +36,7 @@ var createToken = function (req, res) {
 		usr.tokens.push(token)
 		usr.save()
 
-		res.send(JSON.stringify(token))
+		res.send(token)
 	})
 }
 
