@@ -9,10 +9,10 @@ var generateToken = function (uuid){
 	return sha1(uuid+new Date().getTime())
 }
 
-var tokenWithUuid = function (tokens, token) {
+var tokenWithX = function (x, tokens, xx) {
 	
 	for (var t in tokens) {
-		if (tokens[t].uuid == token) return tokens[t]
+		if (tokens[t][x] == xx) return tokens[t]
 	}
 	return null
 }
@@ -27,22 +27,27 @@ var createToken = function (req, res) {
 			usr.setupCategories()
 		}
 
-		var t = tokenWithUuid(usr.tokens, uuid)
+		var t = tokenWithX('uuid', usr.tokens, uuid)
 		if (t){
 			usr.tokens.pop(t)
 		}
 
 		var token = {uuid: uuid, token: generateToken(uuid), expires: parseInt(new Date().getTime()/1000) + config.expireToken}
 		usr.tokens.push(token)
-		usr.save()
-
-		res.send(token)
+		usr.save(function (err){
+			if (err) res.sendStatus(500)
+			else res.send(token)
+		})
 	})
 }
 
 var revokeToken = function (req, res) {
 
-	
+	var user = req.user
+	user.tokens.pop(tokenWithX('token', user.tokens, req.get('X-Api-Token')))
+	user.save(function(err){
+		res.sendStatus((err) ? 500 : 200)
+	})
 }
 var auth = {
 	
