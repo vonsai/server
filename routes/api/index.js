@@ -9,7 +9,8 @@ var require = function (module) {
 var api = {
 
 	auth: require('auth'),
-	categories: require('categories')
+	categories: require('categories'),
+	articles: require('articles')
 }
 
 module.exports = exports = api

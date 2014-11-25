@@ -1,6 +1,4 @@
-var Category = require('mongoose').model('Category'),
-	User = require('mongoose').model('User')
-
+var Category = require('mongoose').model('Category')
 
 var categories = {
 
