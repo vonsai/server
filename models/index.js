@@ -9,5 +9,6 @@ var require = function (module) {
 module.exports = {
     Article: require('article'), 
     Category: require('category'),
-    User: require('user')
+    User: require('user'),
+    Statistic: require('stat')
 };

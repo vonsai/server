@@ -10,7 +10,8 @@ var api = {
 
 	auth: require('auth'),
 	categories: require('categories'),
-	articles: require('articles')
+	articles: require('articles').articles,
+	article: require('articles').article
 }
 
 module.exports = exports = api

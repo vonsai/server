@@ -31,5 +31,14 @@ exports = module.exports = function() {
 		.all(middleware.tokenRequired)
 		.get(routes.api.articles.get)
 
+	app.route('/api/articles/saved')
+		.all(middleware.tokenRequired)
+		.get(routes.api.articles.saved.get)
+
+	app.route('/api/article/:id')
+		.all(middleware.tokenRequired)
+		.get(routes.api.article.get)
+		.post(routes.api.article.post)
+
 	return app
 }

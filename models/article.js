@@ -12,6 +12,7 @@ var Article = new Schema({
    	imageURL: String,
    	url: String,
 
+   	stats: [{type:ObjectId, ref:'Statistic'}],
     category: {type: ObjectId, ref: 'Category'}
 });
 
