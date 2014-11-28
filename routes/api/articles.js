@@ -97,7 +97,7 @@ var articles = {
 						res.send(articles)
 					})
 				})		
-		}
+		}8
 	}
 }
 
@@ -130,6 +130,8 @@ var article = {
 			if (err || !art) {
 				res.sendStatus(500)
 			} else {
+				art = art.toObject()
+				art.stats = art.stats[0]
 				res.send(art)
 			}
 		})
@@ -137,7 +139,11 @@ var article = {
 	post: function (req, res){
 
 		var article = req.params.id
-		
+		var stats = req.body.stats
+
+		if (stats) {
+			
+		}
 
 	}
 }

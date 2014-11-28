@@ -44,7 +44,7 @@ var categories = {
 				newPreferences.push(pref)
 			}
 			user.preferences = newPreferences
-
+			user.hasSetCategories = true
 			user.save(function (err) {
 				if (err) {
 					console.log(err)
