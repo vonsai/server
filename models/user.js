@@ -7,7 +7,7 @@ var Schema = mongoose.Schema,
 var User = new Schema({
 	uuids: [String],
    	tokens: [{uuid: String, token: String, expires: Number}],
-   	hasSetCategories: {type: Boolean, default: false}
+   	hasSetCategories: {type: Boolean, default: false},
 
    	preferences: [{category: {type: ObjectId, ref: 'Category'}, value: Number}],
    	stats: [{type:ObjectId, ref:'Statistic'}]

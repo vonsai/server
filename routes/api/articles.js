@@ -97,7 +97,7 @@ var articles = {
 						res.send(articles)
 					})
 				})		
-		}8
+		}
 	}
 }
 
