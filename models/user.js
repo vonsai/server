@@ -20,7 +20,7 @@ User.methods.setupCategories = function (callback) {
 		if (!err){
 			_.each(cats, function(cat, cb){
 
-				user.preferences.push({category:cat._id, value: 0.5})
+				user.preferences.push({category:cat._id, value: 0.2})
 				cb()
 
 			}, function (err){

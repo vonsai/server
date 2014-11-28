@@ -31,9 +31,11 @@ var getToken = function(ts, t) {
 var checkToken = function (req, res, next) {
 
 	var t = req.get('X-Api-Token')
+
 	User.findOne({"tokens.token": t}).populate("preferences.category").exec(function (err, user) {
 		if (err || !user) {
-			res.sendStatus(403)
+			console.log(err)
+			res.sendStatus(402)
 		} else if (parseInt(new Date().getTime()/1000) > getToken(user.tokens, t).expires) {
 			res.sendStatus(440)
 		} else {
