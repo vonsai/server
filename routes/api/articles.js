@@ -140,9 +140,29 @@ var article = {
 
 		var article = req.params.id
 		var stats = req.body.stats
+		var user = req.user
 
 		if (stats) {
-			
+			Stat.findOne({article: article, user: user}, function(err, stat){
+				if (err || !stat){
+					res.sendStatus(500)
+				} else {
+					if (stats.saved) { 
+						stat.saved = stats.saved
+						stat.savedTimestamp = parseInt(new Date().getTime()/1000) 
+					}
+					if (stats.readingTime) {
+						stat.readingTime += stats.readingTime
+					}
+					stat.save(function(err){
+						if (err) {
+							res.sendStatus(500)
+						} else {
+							article.get(req, res)
+						}
+					})
+				}
+			})
 		}
 
 	}

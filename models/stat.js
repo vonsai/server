@@ -10,7 +10,7 @@ var Stat = new Schema({
 	user: {type:ObjectId, ref:'User'},
 
 	saved: {type: Number, default:0}, // 0 = unset, 1 = saved, -1 = discarted
-	savedTime: {type: Number, default:0},
+	savedTimestamp: {type: Number, default:0},
 	readingTime: {type: Number, default:0}
 })
 

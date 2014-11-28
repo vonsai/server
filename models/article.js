@@ -12,6 +12,9 @@ var Article = new Schema({
    	imageURL: String,
    	url: String,
 
+    beacon: String,
+    location: {latitude: Number, longitude: Number},
+
    	stats: [{type:ObjectId, ref:'Statistic'}],
     category: {type: ObjectId, ref: 'Category'}
 });
