@@ -21,7 +21,7 @@ var categories = {
 		var categories = req.body.categories
 
 		if (!categories){
-			res.sendStatus(405)
+			res.send(405, {})
 		} else {
 
 			var catObject = {}
@@ -47,9 +47,9 @@ var categories = {
 			user.save(function (err) {
 				if (err) {
 					console.log(err)
-					res.sendStatus(500)
+					res.send(500, {})
 				} else {
-					res.sendStatus(200)
+					res.send(200, {})
 				}
 			})
 

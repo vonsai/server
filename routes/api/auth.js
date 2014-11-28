@@ -35,7 +35,7 @@ var createToken = function (req, res) {
 		var token = {uuid: uuid, token: generateToken(uuid), expires: parseInt(new Date().getTime()/1000) + config.expireToken}
 		usr.tokens.push(token)
 		usr.save(function (err){
-			if (err) res.sendStatus(500)
+			if (err) res.send(500, {})
 			else res.send({token:token, accountTokens:usr.tokens.length, hasSetCategories: usr.hasSetCategories})
 		})
 	})
@@ -46,7 +46,7 @@ var revokeToken = function (req, res) {
 	var user = req.user
 	user.tokens.pop(tokenWithX('token', user.tokens, req.get('X-Api-Token')))
 	user.save(function(err){
-		res.sendStatus((err) ? 500 : 200)
+		res.send((err) ? 500 : 200, {})
 	})
 }
 var auth = {

@@ -15,7 +15,7 @@ var checkSignature = function (req, res, next){
 		secret = keys[key]
 
 	if (!s || !t || parseInt(new Date().getTime()/1000) - 10 > t || !secret || sign(secret, t) != s){
-		res.sendStatus(403)
+		res.send(403, {})
 	} else {
 		next()
 	}
@@ -35,9 +35,9 @@ var checkToken = function (req, res, next) {
 	User.findOne({"tokens.token": t}).populate("preferences.category").exec(function (err, user) {
 		if (err || !user) {
 			console.log(err)
-			res.sendStatus(402)
+			res.send(403, {})
 		} else if (parseInt(new Date().getTime()/1000) > getToken(user.tokens, t).expires) {
-			res.sendStatus(440)
+			res.send(440, {})
 		} else {
 			req.user = user
 			next()

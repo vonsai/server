@@ -123,7 +123,7 @@ var article = {
 		var articleId = req.params.id
 		getArticle(req.user, articleId, function (err, art) {
 			if (err || !art) {
-				res.sendStatus(500)
+				res.send(500, {})
 			} else {
 				art = art.toObject()
 				art.stats = art.stats[0]
@@ -140,7 +140,7 @@ var article = {
 		if (stats) {
 			Stat.findOne({article: article, user: user}, function(err, stat){
 				if (err || !stat){
-					res.sendStatus(500)
+					res.send(500, {})
 				} else {
 					if (stats.saved) { 
 						stat.saved = stats.saved
@@ -151,7 +151,7 @@ var article = {
 					}
 					stat.save(function(err){
 						if (err) {
-							res.sendStatus(500)
+							res.send(500, {})
 						} else {
 							article.get(req, res)
 						}
