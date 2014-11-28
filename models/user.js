@@ -24,7 +24,7 @@ User.methods.setupCategories = function (callback) {
 				cb()
 
 			}, function (err){
-				user.hasSetCategories = true
+				user.hasSetCategories = false
 				user.save(callback)
 			})
 		}

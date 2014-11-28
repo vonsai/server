@@ -66,11 +66,12 @@ var articles = {
 					
 					_.map(arts, function(art, cb){
 						var newArt = art.toObject()
+						newArt.id = art._id
 						newArt.stats = newArt.stats || []
 						newArt.stats = newArt.stats[0] || {saved:0, readingTime:0, invented:true}
 						cb(null, newArt)
 					}, function (err, artis){
-						res.send(artis)
+						res.send({articles:artis})
 					})
 				})
 			})
@@ -79,24 +80,18 @@ var articles = {
 		get: function(req, res){
 			var user = req.user
 			
-			//TODO: Better do a user query [Issue: https://github.com/vonsai/server/issues/2]
-			Article
-				.find()
-				.select("-__v")
-				.limit(20)
-				.populate("category", "name -_id")
-				.populate({path:"stats", match:{user:user._id}, select:"saved readingTime -_id"})
-				.sort("-timestamp")
-				.exec(function (err, articles){
-					_.filter(articles, function (art, cb){
+			Stat
+				.find({user: user._id, saved:1})
+				.sort("-savedTimestamp")
+				.exec(function(err, stats){
+					_.map(stats, function (stat, cb) {
 
-						cb(user.stats.length > 0 && user.stats[0].saved == 1)
-					
-					}, function (err, articles){
+						getArticle(user, stat.article, cb)
 
-						res.send(articles)
+					}, function (err, arts) {
+						res.send({articles:artis})
 					})
-				})		
+				})
 		}
 	}
 }

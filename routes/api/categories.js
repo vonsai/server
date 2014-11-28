@@ -9,7 +9,6 @@ var categories = {
 
 		for (var i = 0; i<preferences.length; i++) {
 			var pref = preferences[i]
-
 			if (pref) categories.push({id: pref.category._id, name: pref.category.name, value: pref.value})
 		}
 
