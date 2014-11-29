@@ -47,10 +47,17 @@ var getOrCreateStat = function (user, article, cb) {
 var articles = {
 	get: function (req, res){
 
-		var user = req.user
+		var user = req.user,
+			beacon = req.query.beacon
 		
+		var empty = {}
+		if (beacon) {
+			empty['beacon'] = beacon
+			console.log('got bicon')
+		}
+
 		Article
-			.find()
+			.find(empty)
 			.select("-__v")
 			.limit(20)
 			.populate("category", "name -_id")
