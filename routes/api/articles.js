@@ -28,7 +28,6 @@ var getOrCreateStat = function (user, article, cb) {
 
 				user.stats.push(stat._id)
 				article.stats.push(stat._id)
-				var arr = [stat.save, user.save, article.save]
 				
 				// TODO: Fix this. This is wrong [Issue: https://github.com/vonsai/server/issues/1]
 				stat.save(function (err){
@@ -86,10 +85,18 @@ var articles = {
 				.exec(function(err, stats){
 					_.map(stats, function (stat, cb) {
 
-						getArticle(user, stat.article, cb)
+						getArticle(user, stat.article, function (err, art){
+
+							art = art.toObject()
+							art.id = art._id
+							art.stats = art.stats || []
+							art.stats = art.stats[0] || {saved:0, readingTime:0}
+							cb(null, art)
+						})
 
 					}, function (err, arts) {
-						res.send({articles:artis})
+						console.log({articles:arts})
+						res.send({articles:arts})
 					})
 				})
 		}
@@ -117,7 +124,7 @@ var getArticle = function (user, articleId, cb) {
 			}
 		})
 }
-var article = {
+var _article = {
 	get: function (req, res){
 
 		var articleId = req.params.id
@@ -138,12 +145,15 @@ var article = {
 		var user = req.user
 
 		if (stats) {
-			Stat.findOne({article: article, user: user}, function(err, stat){
+			getArticle(user, article, function (err, art){
+
+				Stat.findOne({article: article, user: user}, function(err, stat){
 				if (err || !stat){
+					console.log("no estas"+err)
 					res.send(500, {})
 				} else {
 					if (stats.saved) { 
-						stat.saved = stats.saved
+						stat.saved = (stats.saved) ? 1 : -1
 						stat.savedTimestamp = parseInt(new Date().getTime()/1000) 
 					}
 					if (stats.readingTime) {
@@ -151,15 +161,17 @@ var article = {
 					}
 					stat.save(function(err){
 						if (err) {
+							console.log("err save"+err)
 							res.send(500, {})
 						} else {
-							article.get(req, res)
+							_article.get(req, res)
 						}
 					})
 				}
+			})
 			})
 		}
 
 	}
 }
-module.exports = exports = {articles:articles, article: article}
+module.exports = exports = {articles:articles, article: _article}
